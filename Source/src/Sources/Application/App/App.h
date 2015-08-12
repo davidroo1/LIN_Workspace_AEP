@@ -23,8 +23,8 @@
 /* Integration under Continuus CM                                             */
 /*============================================================================*/
 
-#ifndef LIN_DRIVER_H                               /* To avoid double inclusion */
-#define LIN_DRIVER_H
+#ifndef APP_H                               /* To avoid double inclusion */
+#define APP_H
 
 /* Includes */
 /* -------- */
@@ -60,7 +60,15 @@
 
 
 /* LONGS and STRUCTURES */
-
+typedef enum 
+{
+	cmd_NONE,
+	cmd_LED_on,
+	cmd_LED_off,
+	cmd_LED_toggling,
+	cmd_disable_slv,
+	cmd_enable_slv
+}t_cmdType;
 
 /*======================================================*/ 
 /* close variable declaration sections                  */
@@ -70,14 +78,8 @@
 /* ---------------------------------------- */
 
 /* Functions prototypes */
-extern void initPeriClkGen(void) ;
-extern void Intc_LINFLEX_Rx(void);
-extern void Intc_LINFLEX_Tx(void);
-extern void Intc_LINFLEX_Err(void);
-extern void initLINFlex_0 (T_ULONG lul_BaudRate);
-extern void	IntcInterruptLINFLEXHandlers(void);
-extern T_UBYTE GetLinData(void);
 
+extern void LED (void);
 
 
 /* Functions macros */

@@ -51,7 +51,7 @@
 /* Definition of RAM variables                          */
 /*======================================================*/ 
 /* BYTE RAM variables */
-
+T_UBYTE rub_Data_Rx=0;
 
 /* WORD RAM variables */
 
@@ -122,6 +122,28 @@ void Intc_LINFLEX_Rx(void)
 	{
 		LINFLEX_0.LINSR.B.RMB=1;
 	}
+	
+	if((LINFLEX_0.BIDR.B.ID == 0x0F) || (LINFLEX_0.BIDR.B.ID == 0x11))
+	{
+		rub_Data_Rx=(T_UBYTE) LINFLEX_0.BDRL.B.DATA0;
+	}
+}
+
+
+/* Exported functions */
+/* ------------------ */
+/**************************************************************
+ *  Name                 :	export_func
+ *  Description          :
+ *  Parameters           :  [Input, Output, Input / output]
+ *  Return               :
+ *  Critical/explanation :    [yes / No]
+ **************************************************************/
+
+/*Interrupt function when data is received*/
+T_UBYTE GetLinData(void)
+{ 
+	return rub_Data_Rx;
 }
 
 /* Exported functions */
