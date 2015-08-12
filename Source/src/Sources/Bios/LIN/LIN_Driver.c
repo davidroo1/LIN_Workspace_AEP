@@ -120,12 +120,40 @@ void Intc_LINFLEX_Rx(void)
 /*If slave linflex 0 receives data*/
 	if(LINFLEX_0.LINSR.B.RMB == 1)
 	{
-		LINFLEX_0.LINSR.B.RMB=1;
+		LINFLEX_0.LINSR.B.RMB=0;
 	}
 	
 	if((LINFLEX_0.BIDR.B.ID == 0x0F) || (LINFLEX_0.BIDR.B.ID == 0x11))
 	{
 		rub_Data_Rx=(T_UBYTE) LINFLEX_0.BDRL.B.DATA0;
+	}
+	else if((LINFLEX_0.BIDR.B.ID == 0x21) || (LINFLEX_0.BIDR.B.ID == 0x31))
+	{
+	    if(LINFLEX_0.BIDR.B.ID == 0x21)
+	    {	
+	    	LINFLEX_0.BDRL.B.DATA0 = Get_LEDState();	/* Load buffer data least significant bytes */
+	    	LINFLEX_0.BDRL.B.DATA1 = Get_target_Status();
+	    	LINFLEX_0.BDRL.B.DATA2 = 0x00;
+	    	LINFLEX_0.BDRL.B.DATA3 = 0x00;
+	    	LINFLEX_0.BDRM.R = 0x00000000;  /* Load buffer data most significant bytes */
+  				
+	    }
+	    else
+	    {
+	    	LINFLEX_0.BDRL.B.DATA0 = 'R';	/* Load buffer data least significant bytes */
+	    	LINFLEX_0.BDRL.B.DATA1 = 'F';
+	    	LINFLEX_0.BDRL.B.DATA2 = 'D';
+	    	LINFLEX_0.BDRL.B.DATA3 = 'O';
+	    	LINFLEX_0.BDRM.B.DATA4 = 'R';   /* Load buffer data most significant bytes */
+	    	LINFLEX_0.BDRM.B.DATA5 = 'D';
+	    	LINFLEX_0.BDRM.B.DATA6 = 0x00;
+	    	LINFLEX_0.BDRM.B.DATA7 = 0x00;
+	    }
+		LINFLEX_0.LINCR2.B.DTRQ=1;	
+	}
+	else
+	{
+		/* Do nothing */
 	}
 }
 
@@ -164,7 +192,44 @@ void Intc_LINFLEX_Tx(void)
 /*if slave linflex 0 transfers data*/
 	if(LINFLEX_0.LINSR.B.DTF == 1)
 	{
-		LINFLEX_0.LINSR.B.DTF=1;
+		LINFLEX_0.LINSR.B.DTF=0;
+	}
+	if(LINFLEX_0.LINSR.B.RMB == 1)
+	{
+		LINFLEX_0.LINSR.B.RMB=0;
+	}
+	
+	if((LINFLEX_0.BIDR.B.ID == 0x21) || (LINFLEX_0.BIDR.B.ID == 0x31))
+	{
+	    if(LINFLEX_0.BIDR.B.ID == 0x21)
+	    {	
+	    	LINFLEX_0.BDRL.B.DATA0 = Get_LEDState();	/* Load buffer data least significant bytes */
+	    	LINFLEX_0.BDRL.B.DATA1 = Get_target_Status();
+	    	LINFLEX_0.BDRL.B.DATA2 = 0x00;
+	    	LINFLEX_0.BDRL.B.DATA3 = 0x00;
+	    	LINFLEX_0.BDRM.R = 0x00000000;  /* Load buffer data most significant bytes */
+  				
+	    }
+	    else
+	    {
+	    	LINFLEX_0.BDRL.B.DATA0 = 'R';	/* Load buffer data least significant bytes */
+	    	LINFLEX_0.BDRL.B.DATA1 = 'F';
+	    	LINFLEX_0.BDRL.B.DATA2 = 'D';
+	    	LINFLEX_0.BDRL.B.DATA3 = 'O';
+	    	LINFLEX_0.BDRM.B.DATA4 = 'R';   /* Load buffer data most significant bytes */
+	    	LINFLEX_0.BDRM.B.DATA5 = 'D';
+	    	LINFLEX_0.BDRM.B.DATA6 = 0x00;
+	    	LINFLEX_0.BDRM.B.DATA7 = 0x00;
+	    }
+		LINFLEX_0.LINCR2.B.DTRQ=1;
+	}
+	else if((LINFLEX_0.BIDR.B.ID == 0x0F) || (LINFLEX_0.BIDR.B.ID == 0x11))
+	{
+		/* Do nothing */
+	}
+	else
+	{
+		/* Do nothing */
 	}
 }
  

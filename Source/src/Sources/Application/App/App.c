@@ -38,7 +38,8 @@
 /* Definition of constants                          */
 /*==================================================*/ 
 /* BYTE constants */
-
+T_UBYTE rub_LEDstat=OFF;
+T_UBYTE rub_target_Status=ACTIVE;
 
 /* WORD constants */
 
@@ -94,6 +95,7 @@
  **************************************************************/
 void LED (void)
 {
+	static T_UBYTE lub_ToggleCounter=0; 
 	T_UBYTE lub_Comand=GetLinData();
 	static T_UBYTE lub_LedState=cmd_NONE;
 	switch (lub_LedState)
@@ -104,14 +106,22 @@ void LED (void)
 	 	case cmd_LED_on:
 	 	 				lub_LedState=lub_Comand;
 	 	 				LED_ON(LED1);
+	 	 				rub_LEDstat=ON;
 						break;
 	 	case cmd_LED_off:
 	 					lub_LedState=lub_Comand;
 	 					LED_OFF(LED1);
+	 					rub_LEDstat=OFF;
 						break;
 	 	case cmd_LED_toggling:
 	 					lub_LedState=lub_Comand;
-	 					LED_TOGGLE(LED1);
+	 					rub_LEDstat=TOGGLING;
+	 					lub_ToggleCounter++;
+	 					if(lub_ToggleCounter >= 167)
+	 					{
+	 						LED_TOGGLE(LED1);
+	 						lub_ToggleCounter=0;
+	 					}
 						break;
 	 	case cmd_disable_slv:
 	 					if(cmd_enable_slv == lub_Comand)
@@ -120,11 +130,12 @@ void LED (void)
 	 					}
 	 					else
 	 					{
-	 						/* Do nothing */
+	 						rub_target_Status=INACTIVE;
 	 					}
 						break;
 	    case cmd_enable_slv:
 	    				lub_LedState=lub_Comand;
+	    				rub_target_Status=ACTIVE;
 						break;
 		default:		
 						lub_LedState=lub_Comand;
@@ -141,3 +152,22 @@ void LED (void)
  *  Return               :
  *  Critical/explanation :    [yes / No]
  **************************************************************/
+T_UBYTE Get_LEDState (void)
+{
+	return rub_LEDstat;
+}
+
+
+/* Exported functions */
+/* ------------------ */
+/**************************************************************
+ *  Name                 :	export_func
+ *  Description          :
+ *  Parameters           :  [Input, Output, Input / output]
+ *  Return               :
+ *  Critical/explanation :    [yes / No]
+ **************************************************************/
+T_UBYTE Get_target_Status (void)
+{
+	return rub_target_Status;
+}

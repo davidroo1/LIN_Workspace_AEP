@@ -106,7 +106,7 @@ int main(void)
 	
   
   
-  	initLINFlex_0(BAUDRATE_9600);         /* Initialize FLEXCAN 0 as master */
+  	initLINFlex_0(BAUDRATE_9600);         /* Initialize FLEXCAN 0 as slave */
     
     
    SchM_Init(&SchConfig);

@@ -70,6 +70,27 @@ typedef enum
 	cmd_enable_slv
 }t_cmdType;
 
+typedef enum
+{
+	ON,
+	OFF,
+	TOGGLING
+}t_LEDstat;
+
+typedef enum
+{
+	ACTIVE,
+	INACTIVE
+}t_target_active;
+
+typedef enum
+{
+	VERDADERO,
+	FALSO
+}t_boolean;
+
+
+
 /*======================================================*/ 
 /* close variable declaration sections                  */
 /*======================================================*/ 
@@ -80,7 +101,8 @@ typedef enum
 /* Functions prototypes */
 
 extern void LED (void);
-
+extern T_UBYTE Get_target_Status (void);
+extern T_UBYTE Get_LEDState (void);
 
 /* Functions macros */
 

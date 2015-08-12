@@ -85,9 +85,9 @@ void vfnGPIO_Output(uint8_t channel, uint8_t logical_value);
 /** Reed button*/
 #define BOTTON_PRESS(channel)				(SIU.GPDI[channel].B.PDI)
 /** Set LED */ 
-#define LED_ON(channel)                     (SIU.GPDO[channel].B.PDO =  1)
+#define LED_ON(channel)                     (SIU.GPDO[channel].B.PDO =  0)
 /** Clear LED */ 
-#define LED_OFF(channel)                    (SIU.GPDO[channel].B.PDO =  0)
+#define LED_OFF(channel)                    (SIU.GPDO[channel].B.PDO =  1)
 /** Toggle LED */ 
 #define LED_TOGGLE(channel)                 (SIU.GPDO[channel].B.PDO ^= 1) 
 
