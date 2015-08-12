@@ -31,12 +31,13 @@
 #include    "SchM.h"
 #include    "SchM_Cfg.h"
 #include    "MemAlloc_Cfg.h"
+#include    "LIN_Driver.h"
 
 /*****************************************************************************************************
 * Definition of module wide VARIABLEs 
 *****************************************************************************************************/
 
-
+#define BAUDRATE_9600 9600
 /****************************************************************************************************
 * Declaration of module wide FUNCTIONs 
 *****************************************************************************************************/
@@ -52,6 +53,8 @@ T_UBYTE Function1(T_UBYTE *rpub_U8Ptr)
 {
 	return (*rpub_U8Ptr);
 }   
+
+
 
 /*****************************************************************************************************
 * Definition of global wide MACROs / #DEFINE-CONSTANTs
@@ -86,6 +89,8 @@ int main(void)
 	
 	
 	initModesAndClock();
+	/*Enable peri set 1 sysclk divided by 1 */
+	initPeriClkGen();
 	/* Disable Watchdog */
 	disableWatchdog();
 	/*Initialize LEDs on TRK-MPC560xB board */
@@ -97,8 +102,11 @@ int main(void)
 	/*Initialize Exception Handlers */
 	EXCEP_InitExceptionHandlers();
 	
+	IntcInterruptLINFLEXHandlers();
 	
-    
+  
+  
+  	initLINFlex_0(BAUDRATE_9600);         /* Initialize FLEXCAN 0 as master */
     
     
    SchM_Init(&SchConfig);

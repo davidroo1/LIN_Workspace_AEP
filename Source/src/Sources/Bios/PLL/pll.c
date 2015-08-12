@@ -15,7 +15,7 @@ void initModesAndClock(void)
 
 	ME.PCTL[92].R = 0x01;           	/* PIT, RTI: select ME_RUN_PC[1] */
 	ME.PCTL[68].R = 0x01;				/* SIUL */
-	
+	ME.PCTL[48].R = 0x01;           /* MPC56xxB/P/S LINFlex 0: select ME.RUNPC[1] */	
 		    		
 	                              		/* Mode Transition to enter RUN0 mode: */
 	ME.MCTL.R = 0x40005AF0;         	/* Enter RUN0 Mode & Key */
@@ -26,7 +26,3 @@ void initModesAndClock(void)
 	{;} 								
 }
 
-void initPeriClkGen(void) 
-{
-	CGM.SC_DC[2].R = 0x80;          	/* MPC56xxB: Enable peri set 3 sysclk divided by 1 */
-}

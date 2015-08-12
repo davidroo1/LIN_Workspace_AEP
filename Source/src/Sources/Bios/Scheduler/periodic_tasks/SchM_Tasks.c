@@ -27,7 +27,7 @@
 /* -------- */
 #include "SchM_Tasks.h"
 #include "GPIO.h"
-#include "WindowLifter.h"
+
 
 /* Functions macros, constants, types and datas         */
 /* ---------------------------------------------------- */
